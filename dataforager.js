@@ -18,6 +18,19 @@
 	} else {
 		initForager();
 	}
+        
+        function validateTwitterAccount(twitter_account){
+          nonalpha = twitter_account.match(/\W/)
+          if(twitter_account.length > 0 && nonalpha == null){
+            return true;
+          }else{
+            return false;
+          }
+        }
+
+        function trim(stringToTrim) {
+          return stringToTrim.replace(/^\s+|\s+$/g,"");
+        }
 
 	function initForager() {
           window.jQuery('head').append('<link rel="stylesheet" href="http://natematias.com/medialab/dataforager/dataforager.css" type="text/css" />');
@@ -86,7 +99,10 @@
           df_main = window.jQuery("#dataforager_main");
           df_main.append("<ul>");
           window.jQuery.each(twitter_accounts, function(index, value){
-            df_main.append("<li>@" + value + "</li>");
+            value = trim(value);
+            if(validateTwitterAccount(value)){
+              df_main.append("<li>@" + value + "</li>");
+            }
           });
           df_main.append("</ul>");
 	}
