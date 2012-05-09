@@ -65,7 +65,6 @@
                 m = value.match(/screen_name=(.*?)"/)
                 if(m!=null) account = m[1]
               }else if(value.match(/#!/)){
-                //https://twitter.com/#!/MiSo0o0o0o/status/198714759728726016
                 m = value.match(/(http|https):\/\/twitter.com\/#.*?\/(.*?)(\/|")/);
                 if(m==null){
                   alert(value);
@@ -91,6 +90,7 @@
               deduped_accounts.push(twitter_accounts[i]);
             }
           }
+          deduped_accounts.push(twitter_accounts[twitter_accounts.length-1]);
           twitter_accounts = deduped_accounts;
 
           //alert(twitter_accounts);
