@@ -95,16 +95,16 @@
 
           //alert(twitter_accounts);
 
-          window.jQuery('body').append("<div id='dataforager_main'><h1>Data Forager Reults</h1></div>");
+          window.jQuery('body').append("<div id='dataforager_main'><h1>Data Forager Results</h1></div>");
           df_main = window.jQuery("#dataforager_main");
           df_main.append("<ul>");
+          list = jQuery("#dataforager_main ul");
           window.jQuery.each(twitter_accounts, function(index, value){
             value = trim(value);
             if(validateTwitterAccount(value)){
-              df_main.append("<li>@" + value + "</li>");
+              list.append("<li>@" + value + "</li>");
             }
           });
-          df_main.append("</ul>");
 	}
 
 })();
