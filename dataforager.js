@@ -95,7 +95,7 @@
 
           //alert(twitter_accounts);
 
-          window.jQuery('body').append("<div id='dataforager_main'><h1>Data Forager Results</h1></div>");
+          window.jQuery('body').append("<div id='dataforager_main'><a href='javascript:window.jQuery(\"#dataforager_main\").remove();none;' style='display:inline-block; float:right'>(close)</a><h1>Data Forager Results</h1></div>");
           df_main = window.jQuery("#dataforager_main");
           df_main.append("<ul>");
           list = jQuery("#dataforager_main ul");
