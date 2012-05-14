@@ -1,0 +1,7 @@
+To run this, download the Node.js installer:
+
+http://nodejs.org/#download
+
+Then type "node index.js"
+
+The version of the bookmarklet contained here should send twitter account names to the node server, which you can then copy into a textfile for aggregation purposes.

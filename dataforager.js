@@ -103,6 +103,7 @@
             value = trim(value);
             if(validateTwitterAccount(value)){
               list.append("<li>@" + value + "</li>");
+              jQuery.get("http://localhost:8888/index?" + value, function(data){});
             }
           });
 	}
