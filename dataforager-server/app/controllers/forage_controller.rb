@@ -30,7 +30,8 @@ class ForageController < ApplicationController
     #end
 
     begin
-      list = Twitter.list_create("dataforager" + Time.now().to_i.to_s, options={:mode =>'private', :description=>"List automatically created by DataForager"})
+      listname = "dataforager" + Time.now().to_i.to_s
+      list = Twitter.list_create(listname, options={:mode =>'private', :description=>"List automatically created by DataForager"})
     rescue InternalServerError
       logger.debug("Couldn't create list.")
       return
@@ -39,9 +40,10 @@ class ForageController < ApplicationController
     logger.debug(list)
     account_strings.each do |account_string|
       begin
-        request = Twitter.list_add_members("100arguments", "dataforager", account_string)
-      rescue 
+        request = Twitter.list_add_members("100arguments", listname, account_string)
+      rescue Exception => ex
         logger.debug("couldn't add #{account_string}")
+        logger.debug(ex)
       end
       logger.debug(request)
     end
