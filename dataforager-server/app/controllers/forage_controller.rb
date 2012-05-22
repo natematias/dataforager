@@ -8,7 +8,7 @@ class ForageController < ApplicationController
   def forage
     
     #convert the accounts into an actual set of accounts
-    account_strings = params["accounts"].split("\n")
+    account_strings = params["accounts"]
 
     account_strings.map! do |account_string|
       account_string.gsub("@","").gsub(" ", "").gsub("\r", "")
@@ -17,16 +17,32 @@ class ForageController < ApplicationController
     account_strings.keep_if {|account_string| account_string != ""}
     logger.debug(account_strings)
   
-    lists = Twitter.lists("100arguments")
-    lists.lists.each do |list|
-      if list.name == "dataforager"
-        Twitter.list_destroy("100arguments", "dataforager")
-      end
-    end 
-    list = Twitter.list_create("dataforager", options={:mode =>'private', :description=>"List automatically created by DataForager"})
+    #begin
+    #  lists = Twitter.lists("100arguments")
+    #  lists.lists.each do |list|
+    #    if list.name == "dataforager"
+    #      Twitter.list_destroy("100arguments", "dataforager")
+    #    end
+    #  end 
+    #rescue InternalServerError
+    #  logger.debug("Couldn't fetch set of lists. Or couldn't destroy list.")
+    #  return
+    #end
+
+    begin
+      list = Twitter.list_create("dataforager" + Time.now().to_i.to_s, options={:mode =>'private', :description=>"List automatically created by DataForager"})
+    rescue InternalServerError
+      logger.debug("Couldn't create list.")
+      return
+    end
+
     logger.debug(list)
     account_strings.each do |account_string|
-      request = Twitter.list_add_members("100arguments", "dataforager", account_string)
+      begin
+        request = Twitter.list_add_members("100arguments", "dataforager", account_string)
+      rescue 
+        logger.debug("couldn't add #{account_string}")
+      end
       logger.debug(request)
     end
   end
