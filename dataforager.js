@@ -99,13 +99,17 @@
           df_main = window.jQuery("#dataforager_main");
           df_main.append("<ul>");
           list = jQuery("#dataforager_main ul");
+          var accounts = new Array();
           window.jQuery.each(twitter_accounts, function(index, value){
             value = trim(value);
             if(validateTwitterAccount(value)){
               list.append("<li>@" + value + "</li>");
-              jQuery.get("http://localhost:8888/index?" + value, function(data){});
+              accounts.push(value)
             }
           });
+          if(accounts.length>0){
+            jQuery.get("http://mediacloud-vm.media.mit.edu:3000/forage", {"accounts[]":accounts}, function(web_result){df_main.append(web_result)});
+          }
 	}
 
 })();
